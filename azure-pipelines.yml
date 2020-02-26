@@ -36,6 +36,11 @@ steps:
       !**\obj\**
     searchFolder: '$(System.DefaultWorkingDirectory)'
 
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'NUnit'
+    testResultsFiles: '**/TEST-*.xml'
+
 - task: AndroidSigning@3
   inputs:
     apkFiles: '**/*.apk'
