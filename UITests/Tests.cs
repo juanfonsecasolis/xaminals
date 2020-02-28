@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using NUnit.Framework;
+using UITests.Pages;
 using Xamarin.UITest;
 using Xamarin.UITest.Queries;
 
@@ -11,57 +12,49 @@ namespace UITests
     [TestFixture(Platform.iOS)]
     public class Tests
     {
-        IApp app;
         Platform platform;
+        CategoryPage homePage;
 
         public Tests(Platform platform)
         {
             this.platform = platform;
+            this.homePage = new CategoryPage();
         }
 
         [SetUp]
         public void BeforeEachTest()
         {
-            app = AppInitializer.StartApp(platform);
+            Settings.AppContext = AppInitializer.StartApp(platform);
         }
-
-        [Test]
-        public void AppLaunches()
-        {
-            app.Screenshot("First screen.");
-        }
-
+        
         [Test]
         public void VerifyAllTabsContainAtLeastOneElement()
         {
             int count;
-            foreach (var tab in new[] {"Domestic","Monkeys","Elephants","Bears"}) { 
-                app.Tap(x => x.Text(tab));
-                count = app.Query(x => x.Class("ItemContentView")).Count();
-                Assert.That(count, Is.GreaterThanOrEqualTo(1), String.Format("No elements are displayed in the tab {0}.",tab));
+            foreach (var category in new[] {"Domestic","Monkeys","Elephants","Bears"}) {
+                homePage.switchToCategory(category);
+                count = homePage.countVisibleAnimals();
+                Assert.That(count, Is.GreaterThanOrEqualTo(1), String.Format("No elements are displayed in the tab {0}.", category));
             }
         }
 
         [Test]
         public void VerifyElementsAreClickable()
         {
-            
-            String cat = "Domestic";
+            String category = "Domestic";
             String animal = "Sphynx";
-            String targetText = "The Sphynx cat is a breed of cat known for its lack of coat(fur).";
-            app.Tap(x => x.Text(cat));
-            app.ScrollDownTo(x => x.Text(animal));
-            app.Tap(x => x.Text(animal));
-            bool result = app.Query(x => x.Class("LabelRenderer"))[2].Text.Contains(targetText);
-            Assert.That(result, Is.True,String.Format("Content text not found for {0}:{1}",cat,animal));
+            String targetDescription = "The Sphynx cat is a breed of cat known for its lack of coat(fur).";
+            AnimalPage animalPage = homePage.tapAnimal(category, animal);
+            Assert.That(animalPage.getDescription().Contains(targetDescription), Is.True, String.Format("Text '{0}' not found in description", targetDescription));
         }
 
         [Test]
         public void VerifySearchBoxIsWorking()
         {
-            app.ClearText(x => x.Class("AppCompatAutoCompleteTextView"));            app.EnterText(x => x.Class("AppCompatAutoCompleteTextView"), "Highlander");
-            app.Tap(x => x.Text("Highlander"));
-            app.Query(x => x.Class("LabelRenderer"))[2].Text.Contains("The Highlander (also known as the Highlander Shorthair)");
+            String animal = "Highlander";
+            String targetDescription = "The Highlander (also known as the Highlander Shorthair)";
+            AnimalPage animalPage = homePage.searchAnimal(animal);
+            Assert.That(animalPage.getDescription().Contains(targetDescription), Is.True, String.Format("Text '{0}' not found in description",targetDescription));
         }
     }
 }
