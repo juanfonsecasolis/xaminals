@@ -1,9 +1,10 @@
 ﻿using System;
+using Xamarin.UITest;
 using Xamarin.UITest.Queries;
 
 namespace UITests.Pages
 {
-    public class CategoryPage
+    public class CategoryPage : Page
     {
         // https://www.infoworld.com/article/2996770/how-to-work-with-delegates-in-c.html:
         // In essence, a delegate holds a reference to a method and also to the target object on which the method should be called.
@@ -11,7 +12,7 @@ namespace UITests.Pages
         Func<AppQuery, AppQuery> searchBtn = x => x.Class("AppCompatAutoCompleteTextView");
         Func<AppQuery, AppQuery> animalItem = x => x.Class("ItemContentView");
 
-        public CategoryPage()
+        public CategoryPage(IApp app) : base(app)
         {
             
         }
@@ -21,26 +22,27 @@ namespace UITests.Pages
 
         internal AnimalPage searchAnimal(String animal)
         {
-            Settings.AppContext.ClearText(searchBtn);            Settings.AppContext.EnterText(searchBtn, animal);
-            Settings.AppContext.Tap(x => x.Text(animal));
-            return new AnimalPage(animal);
+            app.ClearText(searchBtn);            app.EnterText(searchBtn, animal);
+            app.WaitForElement(x => x.Text(animal));
+            app.Tap(x => x.Text(animal));
+            return new AnimalPage(app);
         }
 
         internal AnimalPage tapAnimal(string category, string animal)
         {
-            Settings.AppContext.Tap(x => x.Text(category));
-            Settings.AppContext.ScrollDownTo(x => x.Text(animal));
-            Settings.AppContext.Tap(x => x.Text(animal));
-            return new AnimalPage(animal);
+            app.Tap(x => x.Text(category));
+            app.ScrollDownTo(x => x.Text(animal));
+            app.Tap(x => x.Text(animal));
+            return new AnimalPage(app);
         }
 
         internal void switchToCategory(String category) {
-            Settings.AppContext.Tap(x => x.Text(category));
+            app.Tap(x => x.Text(category));
         }
 
         internal int countVisibleAnimals()
         {
-            return Settings.AppContext.Query(animalItem).Length;
+            return app.Query(animalItem).Length;
         }
     }
     

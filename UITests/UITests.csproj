@@ -39,7 +39,7 @@
     <Compile Include="AppInitializer.cs" />
     <Compile Include="Pages\CategoryPage.cs" />
     <Compile Include="Pages\AnimalPage.cs" />
-    <Compile Include="Settings.cs" />
+    <Compile Include="Pages\Page.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

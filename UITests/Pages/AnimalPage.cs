@@ -1,23 +1,27 @@
 ﻿using System;
+using Xamarin.UITest;
 using Xamarin.UITest.Queries;
 
 namespace UITests.Pages
 {
-    public class AnimalPage
+    public class AnimalPage : Page
     {
 
         Func<AppQuery, AppQuery> labels = x => x.Class("LabelRenderer");
-        String animal;
+        
 
-        public AnimalPage(String animal)
+        public AnimalPage(IApp app): base(app)
         {
-            this.animal = animal;
         }
 
         public String getDescription()
         {
-            return Settings.AppContext.Query(labels)[2].Text;
+            return app.Query(labels)[2].Text;
         }
 
+        internal String getHeader()
+        {
+            return app.Query(labels)[0].Text;
+        }
     }
 }

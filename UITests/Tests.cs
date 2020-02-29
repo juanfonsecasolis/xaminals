@@ -12,19 +12,21 @@ namespace UITests
     [TestFixture(Platform.iOS)]
     public class Tests
     {
+        IApp app;
         Platform platform;
         CategoryPage homePage;
 
         public Tests(Platform platform)
         {
             this.platform = platform;
-            this.homePage = new CategoryPage();
+            
         }
 
         [SetUp]
         public void BeforeEachTest()
         {
-            Settings.AppContext = AppInitializer.StartApp(platform);
+            app = AppInitializer.StartApp(platform);
+            this.homePage = new CategoryPage(app);
         }
         
         [Test]
@@ -34,7 +36,8 @@ namespace UITests
             foreach (var category in new[] {"Domestic","Monkeys","Elephants","Bears"}) {
                 homePage.switchToCategory(category);
                 count = homePage.countVisibleAnimals();
-                Assert.That(count, Is.GreaterThanOrEqualTo(1), String.Format("No elements are displayed in the tab {0}.", category));
+                Assert.That(count, Is.GreaterThanOrEqualTo(1),
+                    String.Format("No elements are displayed in the tab {0}.", category));
             }
         }
 
@@ -43,9 +46,10 @@ namespace UITests
         {
             String category = "Domestic";
             String animal = "Sphynx";
-            String targetDescription = "The Sphynx cat is a breed of cat known for its lack of coat(fur).";
             AnimalPage animalPage = homePage.tapAnimal(category, animal);
-            Assert.That(animalPage.getDescription().Contains(targetDescription), Is.True, String.Format("Text '{0}' not found in description", targetDescription));
+            Assert.That(animalPage.getHeader().Contains(animal), Is.True,
+                String.Format("Text '{0}' not found in description", animal));
+            
         }
 
         [Test]
@@ -54,7 +58,9 @@ namespace UITests
             String animal = "Highlander";
             String targetDescription = "The Highlander (also known as the Highlander Shorthair)";
             AnimalPage animalPage = homePage.searchAnimal(animal);
-            Assert.That(animalPage.getDescription().Contains(targetDescription), Is.True, String.Format("Text '{0}' not found in description",targetDescription));
+            Assert.That(animalPage.getDescription().Contains(targetDescription), Is.True,
+                String.Format("Text '{0}' not found in description",targetDescription));
+            
         }
     }
 }
