@@ -41,7 +41,7 @@ steps:
   inputs:
     command: 'test'
     projects: 'UITests/UITests.csproj'
-    arguments: '--configuration $(buildConfiguration)'
+#    arguments: '--configuration $(buildConfiguration)'
 
 - task: PublishTestResults@2
   inputs:
