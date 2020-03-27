@@ -88,6 +88,18 @@
       <Project>{CD4DE9E8-2721-47F3-BA95-999B6F75FF27}</Project>
       <Name>Xaminals</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Xaminals.Android\Xaminals.Android.csproj">
+      <Project>{DA067342-E7FA-4C40-8809-21401D523D47}</Project>
+      <Name>Xaminals.Android</Name>
+      <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Xaminals.iOS\Xaminals.iOS.csproj">
+      <Project>{2EAAEE32-09F5-4390-9CA5-C67B7CE09BA2}</Project>
+      <Name>Xaminals.iOS</Name>
+      <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\SpecFlow.NUnit.3.0.191\build\SpecFlow.NUnit.targets" Condition="Exists('..\..\packages\SpecFlow.NUnit.3.0.191\build\SpecFlow.NUnit.targets')" />

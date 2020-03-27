@@ -193,3 +193,7 @@ UpgradeLog*.htm
 FakesAssemblies/
 
 .vscode/settings.json
+
+# YAHA
+*.apk
+*.blob

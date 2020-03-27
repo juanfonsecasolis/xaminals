@@ -10,7 +10,7 @@ namespace UITestsSpecFlow
         [BeforeTestRun]
         public static void RegisterPages()
         {
-            AppManager.Platform = Xamarin.UITest.Platform.Android; // TODO: need to fix this
+            AppManager.Platform = Xamarin.UITest.Platform.iOS; // TODO: need to fix this
             AppManager.StartApp();
         }
 

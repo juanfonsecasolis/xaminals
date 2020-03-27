@@ -45,7 +45,7 @@ namespace UITestsSpecFlow
                 app = ConfigureApp
                     .Android
                     // Used to run a .apk file:
-                    .ApkFile(Path.Combine(binariesFolder, "com.companyname.xaminals.apk")) // had to export an APK manually in UITests/Binaries/ folder
+                    //.ApkFile(Path.Combine(binariesFolder, "com.companyname.xaminals.apk")) // had to export an APK manually in UITests/Binaries/ folder
                     //.InstalledApp("Xaminals.Android")
                     .StartApp();
             }
@@ -57,7 +57,7 @@ namespace UITestsSpecFlow
                     // Used to run a .app file on an ios simulator:
                     //.AppBundle(Path.Combine(binariesFolder, "TaskyiOS.app"))
                     // Used to run a .ipa file on a physical ios device:
-                    .InstalledApp("Xaminals.iOS")
+                    //.InstalledApp("Xaminals.iOS")
                     .StartApp();
             }
         }
