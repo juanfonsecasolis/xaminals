@@ -1,4 +1,4 @@
-# Test project for the MS Xaminals project
+# Test projects for the MS Xaminals example
 Supported frameworks:
 * Xamarin.UI tests using the Page Object Model (POM) pattern
 * Xamarin.UI tests using SpecFlow (BDD)
